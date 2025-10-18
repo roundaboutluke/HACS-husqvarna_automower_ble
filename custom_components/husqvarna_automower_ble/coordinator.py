@@ -113,7 +113,9 @@ class HusqvarnaCoordinator(DataUpdateCoordinator[dict[str, str | int]]):
                         data["total_charging_time"] = stats["totalChargingTime"]
                         data["total_searching_time"] = stats["totalSearchingTime"]
                         data["number_of_collisions"] = stats["numberOfCollisions"]
-                        data["number_of_charging_cycles"] = stats["numberOfChargingCycles"]
+                        data["number_of_charging_cycles"] = stats[
+                            "numberOfChargingCycles"
+                        ]
                 except Exception as ex:
                     LOGGER.warning("Failed to fetch mower statistics: %s", ex)
                     # Continue without statistics data
