@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import logging
-from datetime import datetime
 
 from husqvarna_automower_ble.protocol import ModeOfOperation, MowerState, MowerActivity
 from husqvarna_automower_ble.error_codes import ErrorCodes
@@ -158,15 +157,6 @@ class HusqvarnaAutomowerBleSensor(HusqvarnaAutomowerBleDescriptorEntity, SensorE
                 value = MowerActivity(value).name
             elif key == "error":
                 value = ErrorCodes(value).name
-            elif key == "next_start_time" and value is not None:
-                # Ensure value is a datetime object before formatting
-                if isinstance(value, datetime):
-                    value = value.replace(tzinfo=None).isoformat()
-                else:
-                    LOGGER.warning(
-                        "Expected datetime for next_start_time, got %s", type(value)
-                    )
-                    value = None
 
             return value
         except Exception as e:
