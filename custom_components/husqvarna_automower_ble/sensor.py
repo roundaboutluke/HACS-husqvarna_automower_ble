@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+from datetime import datetime
 
 from husqvarna_automower_ble.protocol import ModeOfOperation, MowerState, MowerActivity
 from husqvarna_automower_ble.error_codes import ErrorCodes
@@ -16,6 +17,7 @@ from homeassistant.components.sensor import (
 from homeassistant.const import PERCENTAGE, EntityCategory, UnitOfTime
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
+from homeassistant.util import dt as dt_util
 
 from . import HusqvarnaConfigEntry
 from .entity import HusqvarnaAutomowerBleDescriptorEntity
@@ -157,6 +159,17 @@ class HusqvarnaAutomowerBleSensor(HusqvarnaAutomowerBleDescriptorEntity, SensorE
                 value = MowerActivity(value).name
             elif key == "error":
                 value = ErrorCodes(value).name
+            elif key == "next_start_time" and value is not None:
+                # Ensure value is a datetime object for TIMESTAMP device class
+                if isinstance(value, datetime):
+                    if not value.tzinfo:
+                        # Naive datetime - convert to Home Assistant timezone
+                        value = dt_util.as_local(value)
+                else:
+                    LOGGER.warning(
+                        "Expected datetime for next_start_time, got %s", type(value)
+                    )
+                    value = None
 
             return value
         except Exception as e:
