@@ -23,6 +23,7 @@ LOGGER = logging.getLogger(__name__)
 type HusqvarnaConfigEntry = ConfigEntry[HusqvarnaCoordinator]
 
 PLATFORMS = [
+    Platform.BINARY_SENSOR,
     Platform.LAWN_MOWER,
     Platform.SENSOR,
 ]

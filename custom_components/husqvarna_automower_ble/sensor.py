@@ -33,30 +33,33 @@ DESCRIPTIONS = (
         native_unit_of_measurement=PERCENTAGE,
     ),
     SensorEntityDescription(
-        name="Is Charging",
-        key="is_charging",
-        icon="mdi:power-plug",
-    ),
-    SensorEntityDescription(
         name="Mode",
         key="mode",
+        device_class=SensorDeviceClass.ENUM,
         icon="mdi:robot",
+        options=[mode.name for mode in ModeOfOperation],
     ),
     SensorEntityDescription(
         name="State",
         key="state",
+        device_class=SensorDeviceClass.ENUM,
         icon="mdi:state-machine",
+        options=[state.name for state in MowerState],
     ),
     SensorEntityDescription(
         name="Activity",
         key="activity",
+        device_class=SensorDeviceClass.ENUM,
         icon="mdi:run",
+        options=[activity.name for activity in MowerActivity],
     ),
     SensorEntityDescription(
         name="Error",
         key="error",
+        device_class=SensorDeviceClass.ENUM,
         entity_category=EntityCategory.DIAGNOSTIC,
         icon="mdi:alert-circle",
+        options=[error.name for error in ErrorCodes],
     ),
     SensorEntityDescription(
         name="Next Start Time",
