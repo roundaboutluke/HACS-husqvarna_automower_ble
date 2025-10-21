@@ -17,5 +17,5 @@
     "husqvarna-automower-ble==1.4.2",
     "gardena-bluetooth==1.6.0"
   ],
-  "version": "2.0.1"
+  "version": "2.1.0"
 }
